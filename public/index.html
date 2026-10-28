@@ -64,7 +64,6 @@
   <!-- TOP HEADER -->
   <header class="pulse-glass z-30 flex-none px-3 sm:px-4 py-2.5 flex items-center justify-between border-b border-slate-800/80">
     <div class="flex items-center space-x-2 sm:space-x-3">
-      <!-- Mobile Sidebar Toggle Button -->
       <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-300 hover:text-white rounded-xl hover:bg-surface-800 transition-colors">
         <i class="fa-solid fa-bars text-lg"></i>
       </button>
@@ -148,13 +147,9 @@
   <!-- MAIN APP CONTAINER -->
   <div class="flex-1 flex overflow-hidden relative">
 
-    <!-- MOBILE BACKDROP OVERLAY -->
     <div id="mobile-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-30 hidden lg:hidden"></div>
 
-    <!-- SIDEBAR (RESPONSIVE DRAWER ON MOBILE) -->
     <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-72 lg:w-80 bg-surface-900/95 lg:bg-surface-900/40 border-r border-slate-800/80 flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0">
-      
-      <!-- Active User Header Card -->
       <div class="p-3.5 border-b border-slate-800/80 bg-surface-950/40 flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <div class="relative">
@@ -172,12 +167,10 @@
         </button>
       </div>
 
-      <!-- Quick Search -->
       <div class="p-3">
         <input type="text" id="sidebar-search" onkeyup="filterSidebar()" placeholder="Filter hubs & users..." class="w-full bg-surface-950/80 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500/60">
       </div>
 
-      <!-- Channels & DMs List -->
       <div class="flex-1 overflow-y-auto px-3 space-y-4 py-2">
         <div>
           <div class="px-2 pb-2 flex items-center justify-between text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
@@ -205,9 +198,7 @@
       </div>
     </aside>
 
-    <!-- CHAT MAIN -->
     <main class="flex-1 flex flex-col bg-surface-950/60 relative overflow-hidden">
-      <!-- Active Header -->
       <div class="pulse-glass px-4 py-2.5 flex items-center justify-between border-b border-slate-800/80 z-10">
         <div class="flex items-center space-x-3">
           <div class="w-8 h-8 rounded-xl bg-surface-850 border border-slate-700/60 flex items-center justify-center text-amber-400 font-bold text-sm">
@@ -220,7 +211,6 @@
         </div>
       </div>
 
-      <!-- Messages Stream -->
       <div id="messages-container" class="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3.5">
         <div class="h-full flex flex-col items-center justify-center text-slate-500">
           <i class="fa-solid fa-circle-notch animate-spin text-xl text-amber-400 mb-2"></i>
@@ -228,13 +218,12 @@
         </div>
       </div>
 
-      <!-- Live Typing Bar -->
-      <div id="typing-indicator" class="px-4 py-1 min-h-[18px] text-[11px] text-amber-400 italic flex items-center space-x-2 font-mono"></div>
+      <!-- LIVE TYPING INDICATOR -->
+      <div id="typing-indicator" class="px-4 py-1 min-h-[22px] text-[11px] text-amber-400 italic flex items-center space-x-2 font-mono"></div>
 
-      <!-- Input Form -->
       <div class="p-2.5 sm:p-4 border-t border-slate-800/80 bg-surface-900/60">
         <form id="chat-form" onsubmit="handleSendMessage(event)" class="flex items-center space-x-2 bg-surface-950 border border-slate-800 rounded-2xl p-1.5 focus-within:border-amber-500/60 transition-all">
-          <input type="text" id="message-input" placeholder="Type a message across devices..." class="flex-1 bg-transparent text-slate-100 placeholder-slate-600 text-xs sm:text-sm focus:outline-none px-2 py-1">
+          <input type="text" id="message-input" oninput="handleTypingEvent()" placeholder="Type a message across devices..." class="flex-1 bg-transparent text-slate-100 placeholder-slate-600 text-xs sm:text-sm focus:outline-none px-2 py-1">
           <button type="submit" class="p-2 sm:p-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow-lg transition-all flex-none">
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
@@ -243,7 +232,6 @@
     </main>
   </div>
 
-  <!-- MULTI-DEVICE HELP MODAL -->
   <div id="docs-modal" class="fixed inset-0 z-50 bg-surface-950/80 backdrop-blur-xl hidden flex items-center justify-center p-4">
     <div class="pulse-glass rounded-3xl max-w-lg w-full p-5 shadow-2xl">
       <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-2.5">
@@ -267,15 +255,14 @@
     </div>
   </div>
 
-  <!-- FIREBASE MODULE & LOGIC -->
+  <!-- FIREBASE MODULE & TYPING LOGIC -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { 
-      getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp 
+      getFirestore, collection, addDoc, doc, setDoc, onSnapshot, query, orderBy, serverTimestamp 
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyCmKn4J4nDg60Cy76ED36PK51I6ffrvXrc",
       authDomain: "pulse-chat-app-50bc6.firebaseapp.com",
@@ -290,6 +277,7 @@
     const auth = getAuth(app);
 
     let currentUser = null;
+    let typingTimeout = null;
 
     const presetUsers = {
       'user-1': { id: 'user-1', name: 'Alice', handle: 'alice', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150' },
@@ -310,6 +298,7 @@
         updateHeaderUserSession();
         document.getElementById('auth-modal').classList.add('hidden');
         initChatStream();
+        listenToTypingStatus();
       } else {
         document.getElementById('auth-modal').classList.remove('hidden');
       }
@@ -329,6 +318,7 @@
       updateHeaderUserSession();
       document.getElementById('auth-modal').classList.add('hidden');
       initChatStream();
+      listenToTypingStatus();
       renderSidebar();
     };
 
@@ -346,10 +336,14 @@
       updateHeaderUserSession();
       document.getElementById('auth-modal').classList.add('hidden');
       initChatStream();
+      listenToTypingStatus();
       renderSidebar();
     };
 
     window.handleLogout = function() {
+      if (currentUser) {
+        updateTypingState(false);
+      }
       localStorage.removeItem('pulse_active_user');
       currentUser = null;
       document.getElementById('current-user-name').innerText = 'Guest User';
@@ -433,6 +427,54 @@
       });
     }
 
+    // TYPING LOGIC (FIRESTORE REAL-TIME SYNC)
+    window.handleTypingEvent = function() {
+      if (!currentUser) return;
+      updateTypingState(true);
+
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => {
+        updateTypingState(false);
+      }, 2000);
+    };
+
+    async function updateTypingState(isTyping) {
+      if (!currentUser) return;
+      try {
+        const userTypingRef = doc(db, 'typing_status', currentUser.id);
+        await setDoc(userTypingRef, {
+          userId: currentUser.id,
+          userName: currentUser.name,
+          isTyping: isTyping,
+          updatedAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.error("Typing state error:", err);
+      }
+    }
+
+    function listenToTypingStatus() {
+      const typingCol = collection(db, 'typing_status');
+      onSnapshot(typingCol, (snapshot) => {
+        const indicator = document.getElementById('typing-indicator');
+        const activeTypers = [];
+
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          if (data.isTyping && currentUser && data.userId !== currentUser.id) {
+            activeTypers.push(data.userName);
+          }
+        });
+
+        if (activeTypers.length > 0) {
+          const names = activeTypers.join(', ');
+          indicator.innerHTML = `<i class="fa-solid fa-ellipsis animate-bounce text-amber-400"></i> <span>${names} ${activeTypers.length > 1 ? 'are' : 'is'} writing a message...</span>`;
+        } else {
+          indicator.innerHTML = '';
+        }
+      });
+    }
+
     window.handleSendMessage = async function(e) {
       e.preventDefault();
       if (!currentUser) return;
@@ -441,6 +483,8 @@
       if (!text) return;
 
       input.value = '';
+      updateTypingState(false);
+      clearTimeout(typingTimeout);
 
       try {
         await addDoc(collection(db, 'messages'), {
