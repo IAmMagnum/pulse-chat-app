@@ -27,7 +27,7 @@
               400: '#fbbf24',
               500: '#f59e0b',
               600: '#d97706',
-              accent: '#14b8a6', // Teal highlight
+              accent: '#14b8a6',
             },
             surface: {
               800: '#1e293b',
@@ -41,23 +41,11 @@
     }
   </script>
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.2);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(245, 158, 11, 0.5);
-    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.5); }
     
-    /* Glassmorphism & Custom Elements */
     .pulse-glass {
       background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(16px);
@@ -84,7 +72,6 @@
 
   <!-- TOP HEADER & BRAND BAR -->
   <header class="pulse-glass z-30 flex-none px-4 py-3 flex items-center justify-between border-b border-slate-800/80">
-    <!-- Custom Logo & Status -->
     <div class="flex items-center space-x-3">
       <div class="relative flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-400 to-teal-400 p-0.5 shadow-lg shadow-amber-500/20">
         <div class="w-full h-full bg-surface-950 rounded-[14px] flex items-center justify-center">
@@ -100,15 +87,12 @@
       </div>
     </div>
 
-    <!-- Right Controls -->
     <div class="flex items-center space-x-2 sm:space-x-3">
-      <!-- Network Toggle Simulator -->
       <button id="toggle-network-btn" onclick="toggleNetworkConnection()" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-800 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all shadow-sm">
         <span id="network-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50"></span>
         <span id="network-status-text" class="hidden sm:inline">Online</span>
       </button>
 
-      <!-- Active User Profile Pill -->
       <div id="auth-session-bar" class="flex items-center space-x-2 bg-surface-850 px-3 py-1.5 rounded-xl border border-slate-800">
         <div class="relative">
           <img id="header-user-avatar" src="" class="w-6 h-6 rounded-full object-cover ring-2 ring-amber-500/30" alt="Avatar">
@@ -120,7 +104,6 @@
         </button>
       </div>
 
-      <!-- Docs & Tests Controls -->
       <div class="flex items-center space-x-1 pl-1 border-l border-slate-800">
         <button onclick="openModal('docs-modal')" class="p-2 rounded-xl bg-surface-800 hover:bg-slate-700 text-slate-300 hover:text-amber-400 transition-all" title="Architecture Docs">
           <i class="fa-solid fa-code-commit text-sm"></i>
@@ -136,7 +119,6 @@
   <div id="auth-modal" class="fixed inset-0 z-50 bg-surface-950/90 backdrop-blur-xl flex items-center justify-center p-4">
     <div class="pulse-glass rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl shadow-amber-500/5 relative overflow-hidden">
       
-      <!-- Modal Header Logo -->
       <div class="text-center mb-8">
         <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-500 via-amber-400 to-teal-400 p-0.5 mx-auto flex items-center justify-center shadow-xl shadow-amber-500/20 mb-4">
           <div class="w-full h-full bg-surface-950 rounded-[22px] flex items-center justify-center text-amber-400 text-2xl font-bold">
@@ -147,13 +129,11 @@
         <p id="auth-modal-subtitle" class="text-xs text-slate-400 mt-1.5">A custom, low-latency live messaging workspace</p>
       </div>
 
-      <!-- Form Mode Tabs -->
       <div class="flex bg-surface-950/80 p-1 rounded-2xl mb-6 border border-slate-800">
         <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-amber-500 text-slate-950 shadow-md">Sign In</button>
         <button id="tab-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white">Register</button>
       </div>
 
-      <!-- Login Form -->
       <form id="login-form" onsubmit="handleAuthSubmit(event, 'login')" class="space-y-4">
         <div>
           <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-1.5">Username Handle</label>
@@ -170,7 +150,6 @@
           </div>
         </div>
 
-        <!-- Quick Demo Users Prefill -->
         <div class="pt-2">
           <p class="text-[11px] text-slate-400 mb-2 font-medium">Select a test account to prefill:</p>
           <div class="grid grid-cols-3 gap-2 text-xs">
@@ -185,7 +164,6 @@
         </button>
       </form>
 
-      <!-- Sign Up Form -->
       <form id="signup-form" onsubmit="handleAuthSubmit(event, 'signup')" class="space-y-3.5 hidden">
         <div>
           <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
@@ -219,13 +197,10 @@
   <!-- MAIN APP CONTAINER -->
   <div class="flex-1 flex overflow-hidden relative">
 
-    <!-- MOBILE BACKDROP OVERLAY -->
     <div id="mobile-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-20 hidden lg:hidden"></div>
 
-    <!-- SIDEBAR: CUSTOM NAVIGATION DOCK -->
+    <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-30 w-80 bg-surface-900/95 lg:bg-surface-900/40 border-r border-slate-800/80 flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0">
-      
-      <!-- Current User Details Card -->
       <div class="p-4 border-b border-slate-800/80 bg-surface-950/40 flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <div class="relative">
@@ -242,7 +217,6 @@
         </button>
       </div>
 
-      <!-- Quick Search Bar -->
       <div class="p-3">
         <div class="relative">
           <i class="fa-solid fa-compass absolute left-3.5 top-3 text-xs text-slate-500"></i>
@@ -250,10 +224,7 @@
         </div>
       </div>
 
-      <!-- Navigation Content -->
       <div class="flex-1 overflow-y-auto px-3 space-y-5 py-2">
-        
-        <!-- Group Hubs -->
         <div>
           <div class="px-2 pb-2 flex items-center justify-between text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
             <span class="flex items-center space-x-1.5">
@@ -262,12 +233,9 @@
             </span>
             <span id="channels-count" class="px-1.5 py-0.5 rounded-md bg-surface-800 text-slate-400 font-mono text-[10px]">3</span>
           </div>
-          <div id="channels-list" class="space-y-1">
-            <!-- Dynamic Injection -->
-          </div>
+          <div id="channels-list" class="space-y-1"></div>
         </div>
 
-        <!-- Direct Messaging -->
         <div>
           <div class="px-2 pb-2 flex items-center justify-between text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
             <span class="flex items-center space-x-1.5">
@@ -276,28 +244,21 @@
             </span>
             <span id="dms-count" class="px-1.5 py-0.5 rounded-md bg-surface-800 text-slate-400 font-mono text-[10px]">2</span>
           </div>
-          <div id="dms-list" class="space-y-1">
-            <!-- Dynamic Injection -->
-          </div>
+          <div id="dms-list" class="space-y-1"></div>
         </div>
-
       </div>
 
-      <!-- Footer Info -->
       <div class="p-3.5 bg-surface-950/60 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between font-mono">
         <span class="flex items-center space-x-1.5">
           <span class="w-2 h-2 rounded-full bg-teal-400"></span>
-          <span>WS Sync Ready</span>
+          <span>Local Sync Active</span>
         </span>
         <span class="text-slate-500">v2.0-custom</span>
       </div>
-
     </aside>
 
     <!-- MAIN CHAT CANVAS -->
     <main class="flex-1 flex flex-col bg-surface-950/60 relative overflow-hidden">
-
-      <!-- Active Hub Header -->
       <div class="pulse-glass px-4 py-3 flex items-center justify-between border-b border-slate-800/80 z-10">
         <div class="flex items-center space-x-3">
           <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-xl hover:bg-surface-800">
@@ -314,34 +275,23 @@
           </div>
         </div>
 
-        <!-- Actions -->
         <div class="flex items-center space-x-2">
-          <div id="room-members-avatars" class="hidden sm:flex -space-x-2 overflow-hidden pr-2">
-            <!-- Dynamic Avatars -->
-          </div>
+          <div id="room-members-avatars" class="hidden sm:flex -space-x-2 overflow-hidden pr-2"></div>
           <button onclick="toggleRoomInfoModal()" class="p-2 text-slate-400 hover:text-amber-400 rounded-xl hover:bg-surface-800 transition-colors">
             <i class="fa-solid fa-circle-info text-base"></i>
           </button>
         </div>
       </div>
 
-      <!-- Infinite Scroll Trigger Bar -->
       <div id="loading-history-spinner" class="hidden py-2 text-center text-xs text-amber-400 bg-amber-500/10 border-b border-amber-500/20 flex items-center justify-center space-x-2 font-mono">
         <i class="fa-solid fa-circle-notch animate-spin"></i>
         <span>Fetching archived message logs...</span>
       </div>
 
-      <!-- Messages Stream -->
-      <div id="messages-container" onscroll="handleMessagesScroll(this)" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
-        <!-- Dynamic Messages -->
-      </div>
+      <div id="messages-container" onscroll="handleMessagesScroll(this)" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4"></div>
 
-      <!-- Live Typing Bar -->
-      <div id="typing-indicator" class="px-6 py-1 min-h-[24px] text-xs text-amber-400 italic flex items-center space-x-2 font-mono">
-        <!-- Inserted when user types -->
-      </div>
+      <div id="typing-indicator" class="px-6 py-1 min-h-[24px] text-xs text-amber-400 italic flex items-center space-x-2 font-mono"></div>
 
-      <!-- Attachment Preview Container -->
       <div id="attachment-preview-bar" class="hidden px-4 py-2.5 bg-surface-900 border-t border-slate-800 flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <img id="attachment-preview-img" src="" class="w-12 h-12 object-cover rounded-xl border border-slate-700 shadow-md" alt="Preview">
@@ -355,22 +305,16 @@
         </button>
       </div>
 
-      <!-- CHAT INPUT SECTION -->
       <div class="p-3 sm:p-5 border-t border-slate-800/80 bg-surface-900/60">
         <form id="chat-form" onsubmit="handleSendMessage(event)" class="flex flex-col space-y-2">
-          
           <div class="flex items-end space-x-2 bg-surface-950 border border-slate-800 rounded-2xl p-2 focus-within:border-amber-500/60 transition-all shadow-inner">
-            
-            <!-- Attachment Button -->
             <label class="p-2.5 text-slate-400 hover:text-amber-400 hover:bg-surface-850 rounded-xl cursor-pointer transition-colors flex-none">
               <i class="fa-solid fa-paperclip text-base"></i>
               <input type="file" id="image-input" accept="image/*" onchange="handleFileSelect(event)" class="hidden">
             </label>
 
-            <!-- Text Input area -->
             <textarea id="message-input" rows="1" onkeydown="handleInputKeyDown(event)" oninput="handleTypingEvent()" placeholder="Type a message to the channel..." class="flex-1 bg-transparent text-slate-100 placeholder-slate-600 text-xs sm:text-sm focus:outline-none resize-none py-2 max-h-32 min-h-[40px] leading-relaxed"></textarea>
 
-            <!-- Send Button -->
             <button type="submit" id="send-btn" class="p-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-500/20 transition-all flex-none flex items-center justify-center min-w-[42px] min-h-[42px]">
               <i class="fa-solid fa-paper-plane text-sm"></i>
             </button>
@@ -379,12 +323,10 @@
           <div class="flex items-center justify-between text-[11px] text-slate-500 px-1 font-mono">
             <span class="hidden sm:inline"><kbd class="px-1.5 py-0.5 bg-surface-850 rounded text-slate-400 border border-slate-800">Enter</kbd> to send, <kbd class="px-1.5 py-0.5 bg-surface-850 rounded text-slate-400 border border-slate-800">Shift+Enter</kbd> line break</span>
             <span class="sm:hidden">Tap send to dispatch</span>
-            <span>WebSocket Encrypted</span>
+            <span>Local Sync Enabled</span>
           </div>
-
         </form>
       </div>
-
     </main>
   </div>
 
@@ -401,74 +343,14 @@
         </button>
       </div>
       <div class="p-6 overflow-y-auto space-y-6 text-xs sm:text-sm text-slate-300">
-        
         <div>
           <h4 class="text-amber-400 font-extrabold mb-2 text-base">1. Custom Application Architecture</h4>
-          <p class="mb-2 text-slate-400">Pulse is designed around modern socket streaming paradigms without relying on standard pre-made channel UI templates:</p>
+          <p class="mb-2 text-slate-400">Pulse now utilizes real-time state persistence to keep messages and channels synchronized:</p>
           <ul class="list-disc pl-5 space-y-1 text-slate-400">
-            <li><strong class="text-slate-200">Server Authorization:</strong> In-memory and database user checks ensure message frames only route to authorized room subscribers.</li>
-            <li><strong class="text-slate-200">Lossless Reconnection:</strong> Sequence IDs (`last_seen_id`) prevent dropping frame packets during dropped connections.</li>
-            <li><strong class="text-slate-200">Custom Aesthetic:</strong> Nordic Slate color theme with custom Amber/Teal gradients and pill-shaped responsive bubbles.</li>
+            <li><strong class="text-slate-200">Local Persistence:</strong> All messages, room registrations, and channels automatically persist in local storage.</li>
+            <li><strong class="text-slate-200">Multi-Window Synchronization:</strong> Window storage listeners automatically sync new posts across active tabs and clients.</li>
           </ul>
         </div>
-
-        <div>
-          <h4 class="text-amber-400 font-extrabold mb-2 text-base">2. Schema Design</h4>
-          <pre class="bg-surface-950 p-4 rounded-2xl border border-slate-800 font-mono text-[11px] text-teal-300 overflow-x-auto">
--- Users Table
-CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  username VARCHAR(50) UNIQUE NOT NULL,
-  avatar_url TEXT NOT NULL,
-  is_online BOOLEAN DEFAULT false
-);
-
--- Hubs / Rooms Table
-CREATE TABLE rooms (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(100) NOT NULL,
-  type VARCHAR(10) CHECK (type IN ('public', 'private', 'dm'))
-);
-
--- Room Members Table
-CREATE TABLE room_members (
-  room_id UUID REFERENCES rooms(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  PRIMARY KEY (room_id, user_id)
-);
-
--- Messages Table
-CREATE TABLE messages (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  room_id UUID REFERENCES rooms(id) ON DELETE CASCADE,
-  sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  content TEXT,
-  attachment_url TEXT,
-  is_edited BOOLEAN DEFAULT false
-);</pre>
-        </div>
-
-        <div>
-          <h4 class="text-amber-400 font-extrabold mb-2 text-base">3. Test Credentials</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
-            <div class="bg-surface-950 p-3 rounded-xl border border-slate-800">
-              <p class="font-bold text-slate-100">Alice Vance</p>
-              <p class="text-[11px] text-slate-400">Handle: @alice</p>
-              <p class="text-[11px] text-amber-400">Pass: demo123</p>
-            </div>
-            <div class="bg-surface-950 p-3 rounded-xl border border-slate-800">
-              <p class="font-bold text-slate-100">Bob Smith</p>
-              <p class="text-[11px] text-slate-400">Handle: @bob</p>
-              <p class="text-[11px] text-amber-400">Pass: demo123</p>
-            </div>
-            <div class="bg-surface-950 p-3 rounded-xl border border-slate-800">
-              <p class="font-bold text-slate-100">Charlie Day</p>
-              <p class="text-[11px] text-slate-400">Handle: @charlie</p>
-              <p class="text-[11px] text-amber-400">Pass: demo123</p>
-            </div>
-          </div>
-        </div>
-
       </div>
       <div class="p-4 border-t border-slate-800 bg-surface-900 text-right">
         <button onclick="closeModal('docs-modal')" class="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-bold uppercase tracking-wider">Close Docs</button>
@@ -489,7 +371,6 @@ CREATE TABLE messages (
         </button>
       </div>
       <div class="p-6 overflow-y-auto space-y-4 font-mono text-xs">
-        
         <div class="flex items-center justify-between bg-emerald-950/40 border border-emerald-800/40 p-4 rounded-2xl">
           <div class="flex items-center space-x-2 text-emerald-300 font-bold">
             <i class="fa-solid fa-circle-check"></i>
@@ -497,11 +378,7 @@ CREATE TABLE messages (
           </div>
           <button onclick="runTestsSuite()" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-xl text-xs uppercase tracking-wider">Run Again</button>
         </div>
-
-        <div id="tests-output-list" class="space-y-2.5">
-          <!-- Dynamically filled with test results -->
-        </div>
-
+        <div id="tests-output-list" class="space-y-2.5"></div>
       </div>
       <div class="p-4 border-t border-slate-800 bg-surface-900 text-right">
         <button onclick="closeModal('tests-modal')" class="px-5 py-2 bg-surface-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold">Dismiss</button>
@@ -553,8 +430,7 @@ CREATE TABLE messages (
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    /* 1. DATA MODEL (Custom Database Simulation) */
-    const DB = {
+    const INITIAL_DB = {
       users: [
         { id: 'user-1', name: 'Alice Vance', handle: 'alice', password: 'demo123', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150', isOnline: true },
         { id: 'user-2', name: 'Bob Smith', handle: 'bob', password: 'demo123', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', isOnline: true },
@@ -563,7 +439,7 @@ CREATE TABLE messages (
       rooms: [
         { id: 'room-1', name: 'General Hub', type: 'public', description: 'Public lounge for open conversations', members: ['user-1', 'user-2', 'user-3'] },
         { id: 'room-2', name: 'Core Engineering', type: 'private', description: 'Private developer topics & API specs', members: ['user-1', 'user-2'] },
-        { id: 'room-3', name: 'UI & UX Showcase', type: 'public', description: 'Custom design reviews and assets', members: ['user-1', 'user-3'] }
+        { id: 'room-3', name: 'UI & UX Showcase', type: 'public', description: 'Custom design reviews and assets', members: ['user-1', 'user-2', 'user-3'] }
       ],
       dms: [
         { id: 'dm-1', partnerId: 'user-2', members: ['user-1', 'user-2'] },
@@ -589,7 +465,29 @@ CREATE TABLE messages (
       }
     };
 
-    /* 2. APP STATE */
+    function loadDB() {
+      const saved = localStorage.getItem('pulse_db');
+      if (saved) {
+        try { return JSON.parse(saved); } catch(e) { }
+      }
+      localStorage.setItem('pulse_db', JSON.stringify(INITIAL_DB));
+      return INITIAL_DB;
+    }
+
+    function saveDB() {
+      localStorage.setItem('pulse_db', JSON.stringify(DB));
+    }
+
+    let DB = loadDB();
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'pulse_db') {
+        DB = loadDB();
+        renderSidebar();
+        renderMessages();
+      }
+    });
+
     let currentUser = null;
     let activeChatId = 'room-1';
     let activeChatType = 'room';
@@ -598,7 +496,6 @@ CREATE TABLE messages (
     let reconnectTimer = null;
     let attempts = 0;
 
-    /* 3. INIT & AUTH */
     window.onload = function() {
       runTestsSuite();
       document.getElementById('auth-modal').classList.remove('hidden');
@@ -644,6 +541,7 @@ CREATE TABLE messages (
 
         user.isOnline = true;
         currentUser = user;
+        saveDB();
         showToast(`Welcome back, ${currentUser.name}!`, 'success');
 
       } else {
@@ -671,8 +569,14 @@ CREATE TABLE messages (
         };
 
         DB.users.push(newUser);
-        DB.rooms[0].members.push(newUser.id);
+        DB.rooms.forEach(room => {
+          if (room.type === 'public') {
+            room.members.push(newUser.id);
+          }
+        });
+
         currentUser = newUser;
+        saveDB();
         showToast(`Account registered and logged in!`, 'success');
       }
 
@@ -695,11 +599,11 @@ CREATE TABLE messages (
     function handleLogout() {
       if (currentUser) currentUser.isOnline = false;
       currentUser = null;
+      saveDB();
       showToast('Logged out of session', 'info');
       document.getElementById('auth-modal').classList.remove('hidden');
     }
 
-    /* 4. SIDEBAR & NAVIGATION */
     function renderSidebar() {
       if (!currentUser) return;
 
@@ -758,6 +662,7 @@ CREATE TABLE messages (
 
       if (DB.unreadCounts[currentUser.id]) DB.unreadCounts[currentUser.id][id] = 0;
 
+      saveDB();
       renderSidebar();
       loadActiveChatHeader();
       renderMessages();
@@ -801,7 +706,6 @@ CREATE TABLE messages (
       document.querySelectorAll('#dms-list button').forEach(b => b.style.display = b.innerText.toLowerCase().includes(q) ? 'flex' : 'none');
     }
 
-    /* 5. MESSAGES & BUBBLES */
     function renderMessages() {
       if (!currentUser) return;
       const container = document.getElementById('messages-container');
@@ -880,6 +784,7 @@ CREATE TABLE messages (
           if (!DB.messages[activeChatId]) DB.messages[activeChatId] = [];
           DB.messages[activeChatId] = [...history, ...DB.messages[activeChatId]];
 
+          saveDB();
           spinner.classList.add('hidden');
           isLoadingHistory = false;
           renderMessages();
@@ -887,7 +792,6 @@ CREATE TABLE messages (
       }
     }
 
-    /* 6. SEND & TYPING */
     function handleSendMessage(e) {
       e.preventDefault();
 
@@ -919,6 +823,7 @@ CREATE TABLE messages (
       if (!DB.messages[activeChatId]) DB.messages[activeChatId] = [];
       DB.messages[activeChatId].push(newMsg);
 
+      saveDB();
       input.value = '';
       cancelAttachment();
       renderMessages();
@@ -926,9 +831,7 @@ CREATE TABLE messages (
       if (activeChatType === 'dm') simulateAutomatedReply();
     }
 
-    function handleTypingEvent() {
-      // Live typing hook logic
-    }
+    function handleTypingEvent() {}
 
     function simulateAutomatedReply() {
       const dm = DB.dms.find(d => d.id === activeChatId);
@@ -949,6 +852,7 @@ CREATE TABLE messages (
           createdAt: Date.now()
         };
         DB.messages[activeChatId].push(reply);
+        saveDB();
         renderMessages();
       }, 2000);
     }
@@ -976,6 +880,7 @@ CREATE TABLE messages (
       if (msg && text) {
         msg.content = text;
         msg.isEdited = true;
+        saveDB();
         closeModal('edit-message-modal');
         renderMessages();
         showToast('Message updated', 'success');
@@ -984,11 +889,11 @@ CREATE TABLE messages (
 
     function deleteMessage(id) {
       DB.messages[activeChatId] = (DB.messages[activeChatId] || []).filter(m => m.id !== id);
+      saveDB();
       renderMessages();
       showToast('Message deleted', 'info');
     }
 
-    /* 7. MEDIA ATTACHMENT */
     function handleFileSelect(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1009,7 +914,6 @@ CREATE TABLE messages (
       document.getElementById('attachment-preview-bar').classList.add('hidden');
     }
 
-    /* 8. RECONNECTION BACKOFF */
     function toggleNetworkConnection() {
       isConnected = !isConnected;
       const dot = document.getElementById('network-status-dot');
@@ -1060,7 +964,6 @@ CREATE TABLE messages (
       showToast('WebSocket connection re-established', 'success');
     }
 
-    /* 9. ROOM CREATION & MODALS */
     function handleCreateRoom(e) {
       e.preventDefault();
       if (!currentUser) return;
@@ -1075,10 +978,11 @@ CREATE TABLE messages (
         name: name.toLowerCase().replace(/\s+/g, '-'),
         type: type,
         description: type === 'public' ? 'Public workspace hub' : 'Private team hub',
-        members: [currentUser.id]
+        members: type === 'public' ? DB.users.map(u => u.id) : [currentUser.id]
       };
 
       DB.rooms.push(newRoom);
+      saveDB();
       closeModal('create-room-modal');
       document.getElementById('new-room-name').value = '';
       
@@ -1112,7 +1016,6 @@ CREATE TABLE messages (
       }, 3000);
     }
 
-    /* 10. AUTOMATED UNIT TESTS */
     function runTestsSuite() {
       const tests = [
         {
