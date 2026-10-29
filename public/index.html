@@ -599,7 +599,45 @@
         updateTypingState(false);
       }, 2000);
     };
+    window.handleSendMessage = async function(e) {
+  if (e) e.preventDefault(); // Prevents page reload / navigation back to login
 
+  const input = document.getElementById('message-input');
+  const text = input ? input.value.trim() : '';
+  const image = window.pendingAttachment;
+
+  // Do nothing if both input and attachment are empty
+  if (!text && !image) return;
+
+  // Check if user is logged in
+  if (!window.currentUser) {
+    window.showToast('Please log in to send messages', 'error');
+    document.getElementById('auth-modal').classList.remove('hidden');
+    return;
+  }
+
+  try {
+    // Add message to Firestore
+    await addDoc(collection(db, ...PUBLIC_PATH, 'messages'), {
+      chatId: window.activeChatId,
+      senderHandle: window.currentUser.handle,
+      senderName: window.currentUser.name,
+      senderAvatar: window.currentUser.avatar,
+      content: text,
+      attachmentUrl: image || null,
+      createdAt: serverTimestamp()
+    });
+
+    // Reset input fields
+    if (input) input.value = '';
+    window.cancelAttachment();
+    updateTypingState(false);
+
+  } catch (err) {
+    console.error("Error sending message:", err);
+    window.showToast("Failed to send message", "error");
+  }
+};
     async function updateTypingState(isTyping) {
       if (!window.currentUser) return;
       try {
